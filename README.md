@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🏕️ CAMPRENT
+# 🏕️ GET UR GEAR
 
 ### _Adventure Starts With The Right Gear._
 
