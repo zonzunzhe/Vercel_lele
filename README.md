@@ -27,70 +27,149 @@
 
 ---
 
-## 🌲 About The Project
+# 🌲 About The Project
 
-**CAMPRENT** adalah aplikasi web untuk mempermudah proses **rental dan peminjaman peralatan camping outdoor**.
+**GET UR GEAR** adalah aplikasi web untuk mempermudah proses rental dan peminjaman peralatan camping outdoor secara terstruktur dan mudah aplikasi berbasis web.
 
 Daripada harus membeli semua perlengkapan untuk satu perjalanan, pengguna cukup memilih peralatan yang dibutuhkan, menentukan tanggal peminjaman, dan melakukan booking.
 
 ### 🎯 Tujuan
 
-Membuat proses rental alat camping menjadi:
-
-- ⚡ Cepat
-- 🎒 Praktis
-- 💰 Terjangkau
-- 📦 Terorganisir
-- 🏕️ Siap digunakan untuk berbagai jenis petualangan
-
 ---
 
-## ✨ Features
+## Mempermudah sistem peminjaman dari manual ke yang lebih digital,sistem ini dibuat se-transparan mungkin kepada pengguna untuk melihat status perlengkapan barang yang ingin disewa sehingga meminamilisir kebingungan pengguna.
 
-### 👤 User
+### 🛠️ Fitur
 
-- 🔐 Register & Login
-- 🔎 Browse peralatan camping
-- 🏕️ Detail produk
-- 📅 Pilih tanggal peminjaman
-- 🛒 Keranjang rental
-- 📦 Checkout
-- 💳 Status pembayaran
-- 📜 Riwayat peminjaman
-- ⭐ Review & rating
+# 1. Authentication
 
-### 🧑‍💼 Admin
+Pengguna dapat melakukan:
 
-- 📊 Dashboard
-- 📦 Kelola alat camping
-- ➕ Tambah produk
-- ✏️ Edit produk
-- 🗑️ Hapus produk
-- 📋 Kelola transaksi
-- 👥 Kelola pengguna
-- 📈 Monitoring rental
-- 💰 Monitoring pendapatan
+* Register akun
+* Login
+* Logout
+* Pengelolaan akun pengguna
 
----
+Sistem memiliki pembagian role:
 
-## 🏕️ Equipment
+* User: dapat mengajukan dan melihat peminjaman
+* Admin: dapat mengelola alat dan melakukan approval peminjaman
 
-Beberapa kategori alat yang dapat disediakan:
+# 2. Daftar Alat Outdoor
 
-| Category | Equipment |
-|---|---|
-| ⛺ Shelter | Tenda, Flysheet |
-| 🛏️ Sleeping | Sleeping Bag, Matras |
-| 🔥 Cooking | Kompor, Nesting, Gas |
-| 🎒 Hiking | Carrier, Daypack |
-| 💡 Lighting | Headlamp, Lantern |
-| 🪑 Outdoor | Kursi, Meja Portable |
-| 🧭 Navigation | Kompas, GPS |
-| 🧰 Survival | Emergency Kit, First Aid |
+Pengguna dapat melihat daftar alat yang tersedia untuk dipinjam.
 
----
+Informasi alat meliputi:
 
-## 🚀 Getting Started
+* Nama alat
+* Kategori
+* Deskripsi
+* Jumlah/stok
+* Kondisi alat
+* Status ketersediaan
+* Foto alat
+
+Contoh alat:
+
+* Tenda
+* Sleeping bag
+* Carrier
+* Kompor portable
+* Matras
+* Trekking pole
+* Headlamp
+
+# 3. Pengajuan Peminjaman
+
+Pengguna dapat mengajukan peminjaman dengan mengisi:
+
+* Alat yang ingin dipinjam
+* Jumlah alat
+* Tanggal peminjaman
+* Tanggal pengembalian
+* Keperluan peminjaman
+* Catatan tambahan
+
+Setelah pengajuan dikirim, status peminjaman akan menjadi Menunggu Approval.
+
+# 4. Daftar Status Peminjaman
+
+Pengguna dapat melihat daftar peminjaman yang pernah diajukan beserta statusnya.
+
+Status peminjaman:
+
+* Menunggu: pengajuan belum diproses admin
+* Disetujui: pengajuan diterima admin
+* Ditolak: pengajuan ditolak admin
+* Sedang Dipinjam: alat sedang digunakan
+* Selesai: alat telah dikembalikan
+
+Pengguna juga dapat melihat detail dari setiap pengajuan.
+
+# 5. Approval Management
+
+Admin dapat melihat seluruh pengajuan peminjaman yang masuk.
+
+Admin dapat:
+
+* Melihat detail pengajuan
+* Menyetujui peminjaman
+* Menolak peminjaman
+* Memberikan alasan penolakan
+* Mengubah status peminjaman
+* Melihat riwayat peminjaman
+
+# 6. Management Alat
+
+Admin dapat mengelola data alat outdoor, seperti:
+
+* Menambahkan alat
+* Mengubah informasi alat
+* Menghapus alat
+* Mengubah jumlah/stok alat
+* Mengubah kondisi alat
+* Mengatur status ketersediaan alat
+
+# Alur Sistem
+
+## User
+
+1. User melakukan register/login.
+2. User melihat daftar alat outdoor.
+3. User memilih alat yang ingin dipinjam.
+4. User mengisi form pengajuan peminjaman.
+5. User mengirim pengajuan.
+6. Pengajuan masuk ke sistem dengan status Menunggu.
+7. User menunggu proses approval dari admin.
+8. User dapat melihat status pengajuan.
+9. Jika disetujui, alat dapat dipinjam.
+10. Setelah alat dikembalikan, status berubah menjadi Selesai.
+
+## Admin
+
+1. Admin melakukan login.
+2. Admin melihat dashboard.
+3. Admin melihat daftar pengajuan peminjaman.
+4. Admin memeriksa detail pengajuan.
+5. Admin menyetujui atau menolak pengajuan.
+6. Jika disetujui, stok alat diperbarui.
+7. Admin dapat mengelola data alat dan melihat riwayat peminjaman.
+
+# Role Pengguna
+
+Role| Hak Akses
+User| Melihat alat, mengajukan peminjaman, melihat status peminjaman
+Admin| Mengelola alat, melihat pengajuan, approval peminjaman, melihat riwayat
+
+# Teknologi
+
+Teknologi yang digunakan dalam project ini:
+
+* Frontend: ...
+* Backend: ...
+* Database: ...
+* Authentication: ...
+* Deployment: ...
 
 ### 1. Clone Repository
 
