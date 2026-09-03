@@ -104,3 +104,9 @@ cd camprent
 ```bash
 npm install
 ```
+
+### 3. Run Program
+```bash
+npm run dev
+```
+
