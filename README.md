@@ -97,3 +97,10 @@ Beberapa kategori alat yang dapat disediakan:
 ```bash
 git clone https://github.com/USERNAME/camprent.git
 cd camprent
+
+```
+
+### 2. Package Install
+```bash
+npm install
+```
