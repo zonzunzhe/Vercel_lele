@@ -14,7 +14,7 @@ export default function HalamanUtama() {
           <p className="text-sm text-gray-500">Lihat katalog barang yang tersedia</p>
         </Link>
         
-        <Link href="/Peminjaman Saya" className="p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-emerald-600 hover:shadow-md transition text-center group">
+        <Link href="/peminjaman-saya" className="p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-emerald-600 hover:shadow-md transition text-center group">
           <h2 className="text-xl font-semibold text-emerald-700 mb-2 group-hover:text-emerald-800">Peminjaman Saya</h2>
           <p className="text-sm text-gray-500">Cek status pengajuan Anda</p>
         </Link>
