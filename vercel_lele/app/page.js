@@ -9,7 +9,7 @@ export default function HalamanUtama() {
       </p>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
-        <Link href="/Daftar Alat" className="p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-emerald-600 hover:shadow-md transition text-center group">
+        <Link href="/daftar-alat" className="p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-emerald-600 hover:shadow-md transition text-center group">
           <h2 className="text-xl font-semibold text-emerald-700 mb-2 group-hover:text-emerald-800">Daftar Alat</h2>
           <p className="text-sm text-gray-500">Lihat katalog barang yang tersedia</p>
         </Link>
