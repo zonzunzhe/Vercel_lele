@@ -3,9 +3,9 @@ import Link from 'next/link';
 export default function LoginPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-emerald-700 px-4"> 
-        <h1 className="mb-4 text-3xl font-bold text-gray-900">Get Ur Gear</h1>
+        <h1 className="mb-4 text-3xl font-bold text-white">Get Ur Gear</h1>
       <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-sm border border-gray-200">
-        <h1 className="mb-6 text-center text-xl font-semibold text-gray-900">Login</h1>
+        <h1 className="mb-6 text-center text-xl font-semibold text-emerald-700">Login</h1>
         <div className="space-y-4">
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1">Email</label>
@@ -26,7 +26,7 @@ export default function LoginPage() {
           </div>
 
           <a
-            href="/Daftar Alat"
+            href="/daftar-alat"
             className="block w-full text-center rounded bg-emerald-800 py-2 text-sm text-white font-medium hover:bg-emerald-900 transition"
           >
             Masuk
