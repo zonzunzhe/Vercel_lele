@@ -36,10 +36,10 @@ export default function HalamanDaftarAlat() {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <KartuAlat nama="Proyektor Epson EB-X51" kategori="Elektronik" stok="5" gambar="[Gambar Proyektor]" />
-          <KartuAlat nama="Kamera DSLR Canon" kategori="Fotografi" stok="2" gambar="[Gambar Kamera]" />
+          <KartuAlat nama="Terpal" kategori="Bahan Baku" stok="5" gambar="[Gambar Terpa]" />
+          <KartuAlat nama="Bambu" kategori="Bahan Baku" stok="2" gambar="[Gambar Bambu]" />
           <KartuAlat nama="Speaker Portable JBL" kategori="Audio" stok="4" gambar="[Gambar Speaker]" />
-          <KartuAlat nama="Microphone Wireless" kategori="Audio" stok="3" gambar="[Gambar Mic]" />
+          <KartuAlat nama="Tenda" kategori="Kwbutuhan Dasar" stok="3" gambar="[Gambar Tenda]" />
           <KartuAlat nama="Tripod Kamera" kategori="Fotografi" stok="8" gambar="[Gambar Tripod]" />
           <KartuAlat nama="Kabel HDMI 100 Meter" kategori="Aksesoris" stok="15" gambar="[Gambar Kabel]" />
         </div>
