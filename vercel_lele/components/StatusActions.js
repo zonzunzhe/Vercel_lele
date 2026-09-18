@@ -1,33 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useTransition } from 'react';
 import { BORROW_STATUS } from '@/lib/status-rules';
+import { updateStatusAction } from '@/app/actions/peminjaman';
 
-export default function StatusActions({ peminjamanId, currentStatus, userRole, onStatusUpdated }) {
-  const [loading, setLoading] = useState(false);
+export default function StatusActions({ peminjamanId, currentStatus, userRole }) {
+  const [isPending, startTransition] = useTransition();
 
-  const handleUpdateStatus = async (nextStatus, reason = null) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/peminjaman/${peminjamanId}/status`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nextStatus, reason, userRole }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        alert(`Status berhasil diubah menjadi ${nextStatus}`);
-        if (onStatusUpdated) onStatusUpdated();
+  const handleUpdateStatus = (nextStatus, reason = null) => {
+    startTransition(async () => {
+      const result = await updateStatusAction(peminjamanId, nextStatus, reason);
+      if (result.success) {
+        alert(result.message);
       } else {
-        alert(`Gagal: ${data.message}`);
+        alert(`Gagal: ${result.message}`);
       }
-    } catch (err) {
-      alert('Terjadi kesalahan koneksi.');
-    } finally {
-      setLoading(false);
-    }
+    });
   };
 
   return (
@@ -35,14 +23,14 @@ export default function StatusActions({ peminjamanId, currentStatus, userRole, o
       {userRole === 'ADMIN' && currentStatus === BORROW_STATUS.PENDING && (
         <>
           <button
-            disabled={loading}
+            disabled={isPending}
             onClick={() => handleUpdateStatus(BORROW_STATUS.APPROVED)}
             className="px-3 py-1.5 bg-green-600 text-white rounded text-sm hover:bg-green-700 disabled:opacity-50 font-medium"
           >
-            Approve Peminjaman
+            {isPending ? 'Memproses...' : 'Approve Peminjaman'}
           </button>
           <button
-            disabled={loading}
+            disabled={isPending}
             onClick={() => {
               const reason = prompt('Masukkan alasan penolakan:');
               if (reason) handleUpdateStatus(BORROW_STATUS.REJECTED, reason);
@@ -56,7 +44,7 @@ export default function StatusActions({ peminjamanId, currentStatus, userRole, o
 
       {userRole === 'USER' && currentStatus === BORROW_STATUS.PENDING && (
         <button
-          disabled={loading}
+          disabled={isPending}
           onClick={() => handleUpdateStatus(BORROW_STATUS.CANCELLED)}
           className="px-3 py-1.5 bg-gray-500 text-white rounded text-sm hover:bg-gray-600 disabled:opacity-50 font-medium"
         >
@@ -66,7 +54,7 @@ export default function StatusActions({ peminjamanId, currentStatus, userRole, o
 
       {userRole === 'ADMIN' && currentStatus === BORROW_STATUS.APPROVED && (
         <button
-          disabled={loading}
+          disabled={isPending}
           onClick={() => handleUpdateStatus(BORROW_STATUS.BORROWED)}
           className="px-3 py-1.5 bg-purple-600 text-white rounded text-sm hover:bg-purple-700 disabled:opacity-50 font-medium"
         >
@@ -76,7 +64,7 @@ export default function StatusActions({ peminjamanId, currentStatus, userRole, o
 
       {userRole === 'ADMIN' && currentStatus === BORROW_STATUS.BORROWED && (
         <button
-          disabled={loading}
+          disabled={isPending}
           onClick={() => handleUpdateStatus(BORROW_STATUS.RETURNED)}
           className="px-3 py-1.5 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 disabled:opacity-50 font-medium"
         >
