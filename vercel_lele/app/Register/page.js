@@ -35,7 +35,7 @@ export default function RegisterPage() {
           </div>
 
           <a
-            href="/Login"
+            href="/login"
             className="block w-full text-center rounded bg-emerald-800 py-2 text-sm text-white font-medium hover:bg-emerald-900 transition"
           >
             Daftar
@@ -44,7 +44,7 @@ export default function RegisterPage() {
 
         <p className="mt-4 text-center text-xs text-gray-600">
           Sudah punya akun?{' '}
-          <Link href="/Login" className="text-emerald-700 font-medium hover:underline">
+          <Link href="/login" className="text-emerald-700 font-medium hover:underline">
             Login
           </Link>
         </p>

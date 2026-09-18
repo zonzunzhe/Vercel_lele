@@ -1,4 +1,4 @@
-import { BORROW_STATUS } from './status-rules';
+import { BORROW_STATUS } from '@/lib/status-rules';
 
 const STATUS_CONFIG = {
   [BORROW_STATUS.PENDING]: { label: 'Menunggu Approval', className: 'bg-yellow-100 text-yellow-800' },

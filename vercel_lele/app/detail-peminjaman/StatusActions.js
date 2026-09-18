@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { BORROW_STATUS } from './status-rules';
+import { BORROW_STATUS } from '@/lib/status-rules';
 
 export default function StatusActions({ peminjamanId, currentStatus, userRole, onStatusUpdated }) {
   const [loading, setLoading] = useState(false);

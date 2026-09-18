@@ -15,7 +15,7 @@ export function KartuAlat({ nama, kategori, stok, gambar }) {
         <h3 className="text-lg font-bold text-gray-800 mb-1">{nama}</h3>
         <p className="text-sm text-gray-500 mb-4">Stok Tersedia: {stok}</p>
         <div className="mt-auto">
-          <Link href="/Ajukan Peminjaman" className="block w-full text-center bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-emerald-800 transition">
+          <Link href="/ajukan-peminjaman" className="block w-full text-center bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-emerald-800 transition">
             Pinjam Alat
           </Link>
         </div>

@@ -31,7 +31,7 @@ export default function ProfilePage() {
         {/* Tombol Kembali ke Daftar Alat */}
         <div className="mt-6">
           <Link
-            href="/Daftar Alat"
+            href="/daftar-alat"
             className="block w-full text-center rounded bg-emerald-800 py-2 text-sm text-white font-medium hover:bg-emerald-900 transition"
           >
             Kembali ke Daftar Alat

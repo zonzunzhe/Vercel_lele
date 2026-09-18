@@ -19,12 +19,12 @@ export default function HalamanUtama() {
           <p className="text-sm text-gray-500">Cek status pengajuan Anda</p>
         </Link>
 
-        <Link href="/Ajukan Peminjaman" className="p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-emerald-600 hover:shadow-md transition text-center group">
+        <Link href="/ajukan-peminjaman" className="p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-emerald-600 hover:shadow-md transition text-center group">
           <h2 className="text-xl font-semibold text-emerald-700 mb-2 group-hover:text-emerald-800">Ajukan Pinjaman</h2>
           <p className="text-sm text-gray-500">Buat form pengajuan baru</p>
         </Link>
 
-        <Link href="/Login" className="p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-emerald-600 hover:shadow-md transition text-center group">
+        <Link href="/login" className="p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-emerald-600 hover:shadow-md transition text-center group">
           <h2 className="text-xl font-semibold text-emerald-700 mb-2 group-hover:text-emerald-800">Autentikasi</h2>
           <p className="text-sm text-gray-500">Masuk atau daftar akun baru</p>
         </Link>
