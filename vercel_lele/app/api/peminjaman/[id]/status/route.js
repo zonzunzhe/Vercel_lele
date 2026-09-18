@@ -3,7 +3,7 @@ import { BORROW_STATUS, isValidStatusTransition } from '@/lib/status-rules';
 
 export async function PATCH(request, { params }) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const { nextStatus, reason, userRole } = body;
 
