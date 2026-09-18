@@ -29,7 +29,7 @@ function getWarnaStatus(status) {
 }
 
 export default async function HalamanPeminjamanSaya() {
-  const res = await apiFetch('/peminjaman');
+  const res = await apiFetch('/rentals');
   const riwayat = Array.isArray(res) ? res : res.data || [];
 
   return (

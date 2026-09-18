@@ -33,7 +33,7 @@ export function KartuAlat({ id, nama, kategori, stok, gambar }) {
 }
 
 export default async function HalamanDaftarAlat() {
-  const res = await apiFetch('/alat');
+  const res = await apiFetch('/equipment');
   const daftarAlat = Array.isArray(res) ? res : res.data || [];
 
   return (
@@ -58,10 +58,10 @@ export default async function HalamanDaftarAlat() {
               <KartuAlat 
                 key={alat.id} 
                 id={alat.id}
-                nama={alat.nama} 
-                kategori={alat.kategori} 
-                stok={alat.stok} 
-                gambar={alat.gambar} 
+                nama={alat.nama_gear || alat.name || alat.nama || "Alat Tanpa Nama"} 
+                kategori={alat.kategori || alat.category || "Tanpa Kategori"} 
+                stok={alat.stok ?? alat.stock ?? 0} 
+                gambar={alat.gambar || alat.image_url || alat.image} 
               />
             ))}
           </div>
