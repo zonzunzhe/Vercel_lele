@@ -3,7 +3,7 @@
 import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { submitPeminjaman } from './action';
+import { submitPeminjaman } from './actions';
 
 function FormPengajuan() {
   const router = useRouter();
