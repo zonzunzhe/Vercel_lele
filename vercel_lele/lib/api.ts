@@ -27,6 +27,12 @@ export async function apiFetch(endpoint: string, options: RequestInit = {}) {
     headers['Authorization'] = `Bearer ${bearerToken}`; // Layer 2: User Session JWT
   }
 
+  let reqMethod = options.method ? options.method.toUpperCase() : 'GET';
+  if (reqMethod === 'PUT' || reqMethod === 'DELETE') {
+    headers['X-HTTP-Method-Override'] = reqMethod;
+    reqMethod = 'POST';
+  }
+  
   const res = await fetch(url, {
     ...options,
     headers: { ...headers, ...options.headers },
