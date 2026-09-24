@@ -91,8 +91,89 @@ export default function HalamanUtama() {
           </div>
         </div>
       </section>
+      <section className="px-4 md:px-12 py-10 md:py-16 flex-grow">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 md:mb-10 text-center px-4">
+            <p className="mb-2 md:mb-3 text-xs md:text-sm font-semibold tracking-widest text-emerald-700">
+              — MULAI DARI SINI —
+            </p>
+            <h2 className="text-2xl md:text-4xl font-bold text-emerald-950">
+              Kelola Peminjamanmu dengan Mudah
+            </h2>
+            <p className="mt-2 md:mt-3 text-sm md:text-base text-gray-500">
+              Pilih menu di bawah untuk mengelola peminjaman Anda.
+            </p>
+          </div>
 
-      {/* Ntar dulu */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <Link href="/daftar-alat" className="group rounded-2xl bg-white p-5 md:p-6 shadow-sm border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition">
+              <div className="mb-4 md:mb-5 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-[#dfe6d0] text-xl md:text-2xl">
+                ⛺
+              </div>
+              <h3 className="text-lg md:text-xl font-bold text-emerald-900">
+                Daftar Alat
+              </h3>
+              <p className="mt-1.5 md:mt-2 text-xs md:text-sm leading-5 md:leading-6 text-gray-500">
+                Lihat katalog barang yang tersedia
+              </p>
+              <div className="mt-4 md:mt-6 flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-full bg-[#dfe6d0] text-base md:text-lg text-emerald-900 group-hover:translate-x-1 transition">
+                →
+              </div>
+            </Link>
+
+            <Link href="/peminjaman-saya" className="group rounded-2xl bg-white p-5 md:p-6 shadow-sm border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition">
+              <div className="mb-4 md:mb-5 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-[#eee3d2] text-xl md:text-2xl">
+                📋
+              </div>
+              <h3 className="text-lg md:text-xl font-bold text-emerald-900">
+                Peminjaman Saya
+              </h3>
+              <p className="mt-1.5 md:mt-2 text-xs md:text-sm leading-5 md:leading-6 text-gray-500">
+                Cek status pengajuan Anda
+              </p>
+              <div className="mt-4 md:mt-6 flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-full bg-[#eee3d2] text-base md:text-lg text-gray-800 group-hover:translate-x-1 transition">
+                →
+              </div>
+            </Link>
+
+            <Link href="/ajukan-peminjaman" className="group rounded-2xl bg-white p-5 md:p-6 shadow-sm border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition">
+              <div className="mb-4 md:mb-5 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-[#dfe6d0] text-xl md:text-2xl">
+                📝
+              </div>
+              <h3 className="text-lg md:text-xl font-bold text-emerald-900">
+                Ajukan Pinjaman
+              </h3>
+              <p className="mt-1.5 md:mt-2 text-xs md:text-sm leading-5 md:leading-6 text-gray-500">
+                Buat form pengajuan baru
+              </p>
+              <div className="mt-4 md:mt-6 flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-full bg-[#dfe6d0] text-base md:text-lg text-emerald-900 group-hover:translate-x-1 transition">
+                →
+              </div>
+            </Link>
+
+            <Link href="/login" className="group rounded-2xl bg-white p-5 md:p-6 shadow-sm border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition">
+              <div className="mb-4 md:mb-5 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-[#eee3d2] text-xl md:text-2xl">
+                👤
+              </div>
+              <h3 className="text-lg md:text-xl font-bold text-emerald-900">
+                Login
+              </h3>
+              <p className="mt-1.5 md:mt-2 text-xs md:text-sm leading-5 md:leading-6 text-gray-500">
+                Masuk atau daftar akun baru
+              </p>
+              <div className="mt-4 md:mt-6 flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-full bg-[#eee3d2] text-base md:text-lg text-gray-800 group-hover:translate-x-1 transition">
+                →
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-gray-200 px-6 py-6 md:py-8 text-center mt-auto">
+        <p className="text-xs md:text-sm text-gray-500">
+          © 2026 Get Ur Gear. All rights reserved.
+        </p>
+      </footer>
     </div>
   );
 }
