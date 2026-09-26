@@ -3,7 +3,7 @@
 import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { submitPeminjaman } from './actions';
+import { submitPeminjaman } from './action'; 
 
 function FormPengajuan() {
   const router = useRouter();
@@ -38,77 +38,78 @@ function FormPengajuan() {
 
   if (successMsg) {
     return (
-      <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-10 rounded-xl text-center shadow-sm">
-        <span className="text-5xl block mb-4">✅</span>
-        <h3 className="font-bold text-2xl mb-2">Pengajuan Berhasil!</h3>
-        <p className="text-emerald-700">Mengarahkan ke halaman riwayat peminjaman...</p>
+      <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-6 sm:p-10 rounded-xl text-center shadow-sm">
+        <span className="text-4xl sm:text-5xl block mb-3 sm:mb-4">✅</span>
+        <h3 className="font-bold text-xl sm:text-2xl mb-2">Pengajuan Berhasil!</h3>
+        <p className="text-sm sm:text-base text-emerald-700">Mengarahkan ke halaman riwayat peminjaman...</p>
       </div>
     );
   }
 
+  // [FIX 2] Struktur class responsif (p-5 sm:p-8 dll) dikembalikan
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-      <form onSubmit={handleSubmit} className="p-8 flex flex-col gap-6">
+      <form onSubmit={handleSubmit} className="p-5 sm:p-8 flex flex-col gap-5 sm:gap-6">
         {errorMsg && (
-          <div className="bg-red-50 text-red-700 p-4 rounded-lg text-sm border border-red-200 font-medium flex items-center gap-3">
-            <span className="text-lg">⚠️</span>
+          <div className="bg-red-50 text-red-700 p-3 sm:p-4 rounded-lg text-xs sm:text-sm border border-red-200 font-medium flex items-center gap-3">
+            <span className="text-base sm:text-lg">⚠️</span>
             <span>{errorMsg}</span>
           </div>
         )}
 
         <div>
-          <label className="block text-sm font-semibold text-gray-800 mb-2">ID Alat</label>
+          <label className="block text-xs sm:text-sm font-semibold text-gray-800 mb-1 sm:mb-2">ID Alat</label>
           <input 
             type="text" 
             name="alatId" 
             defaultValue={defaultAlatId} 
             readOnly={!!defaultAlatId}
             required
-            className="w-full border border-gray-200 bg-gray-50 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-gray-800" 
+            className="w-full border border-gray-200 bg-gray-50 p-2.5 sm:p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-sm sm:text-base text-gray-800" 
           />
-          {defaultAlatId && <span className="text-xs text-emerald-600 mt-2 block font-medium">ID terisi otomatis dari katalog.</span>}
+          {defaultAlatId && <span className="text-[10px] sm:text-xs text-emerald-600 mt-1.5 sm:mt-2 block font-medium">ID terisi otomatis dari katalog.</span>}
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-800 mb-2">Tanggal Mulai Pinjam</label>
+          <label className="block text-xs sm:text-sm font-semibold text-gray-800 mb-1 sm:mb-2">Tanggal Mulai Pinjam</label>
           <input 
             type="date" 
             name="tanggalMulai" 
             required
-            className="w-full border border-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-gray-800" 
+            className="w-full border border-gray-200 p-2.5 sm:p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-sm sm:text-base text-gray-800" 
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-800 mb-2">Durasi (Hari)</label>
+          <label className="block text-xs sm:text-sm font-semibold text-gray-800 mb-1 sm:mb-2">Durasi (Hari)</label>
           <input 
             type="number" 
             name="durasi" 
             min="1"
             required
             placeholder="Misal: 3"
-            className="w-full border border-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-gray-800" 
+            className="w-full border border-gray-200 p-2.5 sm:p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-sm sm:text-base text-gray-800" 
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-800 mb-2">Catatan Tambahan (Opsional)</label>
+          <label className="block text-xs sm:text-sm font-semibold text-gray-800 mb-1 sm:mb-2">Catatan Tambahan (Opsional)</label>
           <textarea 
             name="catatan" 
             rows="3"
             placeholder="Misal: Mohon disiapkan sebelum jam 10 pagi."
-            className="w-full border border-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition resize-none text-gray-800" 
+            className="w-full border border-gray-200 p-2.5 sm:p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition resize-none text-sm sm:text-base text-gray-800" 
           ></textarea>
         </div>
 
-        <div className="mt-4 pt-6 border-t border-gray-100 flex gap-4">
-          <Link href="/daftar-alat" className="w-1/3 text-center bg-gray-100 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-200 transition">
+        <div className="mt-2 sm:mt-4 pt-5 sm:pt-6 border-t border-gray-100 flex flex-col-reverse sm:flex-row gap-3 sm:gap-4">
+          <Link href="/daftar-alat" className="w-full sm:w-1/3 text-center bg-gray-100 text-gray-700 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-bold hover:bg-gray-200 transition">
             Batal
           </Link>
           <button 
             type="submit" 
             disabled={isLoading}
-            className="w-2/3 bg-emerald-700 text-white py-3 rounded-lg font-bold hover:bg-emerald-800 transition disabled:bg-emerald-400 disabled:cursor-not-allowed flex justify-center items-center gap-2 tracking-wide"
+            className="w-full sm:w-2/3 bg-emerald-700 text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-bold hover:bg-emerald-800 transition disabled:bg-emerald-400 disabled:cursor-not-allowed flex justify-center items-center gap-2 tracking-wide"
           >
             {isLoading ? 'Memproses... ⏳' : 'Ajukan Peminjaman'}
           </button>
@@ -120,20 +121,20 @@ function FormPengajuan() {
 
 export default function AjukanPeminjamanPage() {
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-gray-50 p-4 sm:p-8">
       <div className="max-w-2xl mx-auto">
-        <div className="flex justify-between items-end mb-8">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 sm:gap-0 mb-6 sm:mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Formulir Pengajuan</h1>
-            <p className="text-gray-500 mt-1">Lengkapi detail untuk meminjam alat.</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Formulir Pengajuan</h1>
+            <p className="text-sm sm:text-base text-gray-500 mt-1">Lengkapi detail untuk meminjam alat.</p>
           </div>
-          <Link href="/daftar-alat" className="text-emerald-700 hover:underline font-medium mb-1">
+          <Link href="/daftar-alat" className="text-emerald-700 hover:underline font-medium text-sm sm:text-base mb-1 self-start sm:self-auto">
             &larr; Batal
           </Link>
         </div>
         
         <Suspense fallback={
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center text-gray-400 font-medium animate-pulse">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 sm:p-12 text-center text-sm sm:text-base text-gray-400 font-medium animate-pulse">
             Memuat formulir...
           </div>
         }>
