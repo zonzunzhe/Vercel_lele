@@ -2,16 +2,25 @@
 
 import { useTransition } from 'react';
 import { BORROW_STATUS } from '@/lib/status-rules';
-import { updateStatusAction } from '@/app/actions/peminjaman';
+import { updateRentalAction } from '@/app/actions/rentals'; // Menggunakan action baru
 
 export default function StatusActions({ peminjamanId, currentStatus, userRole }) {
   const [isPending, startTransition] = useTransition();
 
   const handleUpdateStatus = (nextStatus, reason = null) => {
     startTransition(async () => {
-      const result = await updateStatusAction(peminjamanId, nextStatus, reason);
+      const payload = { 
+        status: nextStatus.toLowerCase()
+      }; 
+      
+      if (reason && nextStatus === BORROW_STATUS.REJECTED) {
+        payload.rejected_reason = reason;
+      }
+
+      const result = await updateRentalAction(peminjamanId, payload);
+      
       if (result.success) {
-        alert(result.message);
+        alert('Status berhasil diperbarui!');
       } else {
         alert(`Gagal: ${result.message}`);
       }
@@ -20,7 +29,7 @@ export default function StatusActions({ peminjamanId, currentStatus, userRole })
 
   return (
     <div className="flex gap-2 my-4">
-      {userRole === 'ADMIN' && currentStatus === BORROW_STATUS.PENDING && (
+      {userRole === 'ADMIN' && currentStatus?.toUpperCase() === BORROW_STATUS.PENDING && (
         <>
           <button
             disabled={isPending}
@@ -42,7 +51,7 @@ export default function StatusActions({ peminjamanId, currentStatus, userRole })
         </>
       )}
 
-      {userRole === 'USER' && currentStatus === BORROW_STATUS.PENDING && (
+      {userRole === 'USER' && currentStatus?.toUpperCase() === BORROW_STATUS.PENDING && (
         <button
           disabled={isPending}
           onClick={() => handleUpdateStatus(BORROW_STATUS.CANCELLED)}
@@ -52,7 +61,7 @@ export default function StatusActions({ peminjamanId, currentStatus, userRole })
         </button>
       )}
 
-      {userRole === 'ADMIN' && currentStatus === BORROW_STATUS.APPROVED && (
+      {userRole === 'ADMIN' && currentStatus?.toUpperCase() === BORROW_STATUS.APPROVED && (
         <button
           disabled={isPending}
           onClick={() => handleUpdateStatus(BORROW_STATUS.BORROWED)}
@@ -62,7 +71,7 @@ export default function StatusActions({ peminjamanId, currentStatus, userRole })
         </button>
       )}
 
-      {userRole === 'ADMIN' && currentStatus === BORROW_STATUS.BORROWED && (
+      {userRole === 'ADMIN' && currentStatus?.toUpperCase() === BORROW_STATUS.BORROWED && (
         <button
           disabled={isPending}
           onClick={() => handleUpdateStatus(BORROW_STATUS.RETURNED)}
