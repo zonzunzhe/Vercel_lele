@@ -28,12 +28,12 @@ export default function RegisterPage() {
   const handleRegister = async (e) => {
     e.preventDefault();
     
-    if (!nama || !email || !password) {
+    if (!nama || !email || !password || !phone) {
       setGeneralError('Semua kolom wajib diisi!');
       return;
     }
 
-    if (phone && phone.length < 10) {
+    if (phone.length < 10) {
       setErrorPhone('Nomor telepon minimal harus 10 digit!');
       return;
     }
@@ -46,12 +46,13 @@ export default function RegisterPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify({
           name: nama,
           email: email,
           password: password,
-          phone: phone || null,
+          phone: phone,
         }),
       });
 
@@ -131,6 +132,7 @@ export default function RegisterPage() {
               value={phone}
               onChange={handlePhoneChange}
               placeholder="08123XXXXXX"
+              required
               className="w-full rounded-xl border border-gray-200 bg-gray-50 p-3 text-base sm:text-sm text-gray-900 focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100 transition"
             />
             {errorPhone && (
