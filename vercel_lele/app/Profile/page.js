@@ -1,69 +1,130 @@
 'use client';
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { userApiFetch } from '@/lib/userApi';
 
 export default function ProfilePage() {
-  const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [edit, setEdit] = useState(false);
 
-  // Fungsi untuk Logout (menghapus token dan kembali ke halaman login)
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    alert('Berhasil keluar!');
-    router.push('/login');
-  };
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const data = await userApiFetch('/users/15');
+
+        setUser(data);
+        setName(data.name);
+        setEmail(data.email);
+        setPhone(data.phone);
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    getUser();
+  }, []);
+
+  async function updateUser() {
+    try {
+      const data = await userApiFetch('/users/15', {
+        method: 'POST',
+        headers: {
+          'X-HTTP-Method-Override': 'PUT',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+        }),
+      });
+
+      setUser(data);
+      setEdit(false);
+      alert('Profil berhasil diperbarui!');
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+  async function deleteUser() {
+    try {
+      await userApiFetch('/users/15', {
+        method: 'POST',
+        headers: {
+          'X-HTTP-Method-Override': 'DELETE',
+        },
+      });
+
+      alert('Akun berhasil dihapus!');
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+  if (!user) {
+    return <div className="p-8">Loading...</div>;
+  }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 font-sans">
-      
-      {/* Judul di luar kotak */}
-      <h1 className="mb-4 text-2xl font-bold text-gray-800">Profil Saya</h1>
+    <div className="p-8 max-w-md mx-auto">
+      <h1 className="text-2xl font-bold mb-6">Profil Saya</h1>
 
-      {/* Kotak Utama Profil */}
-      <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-sm border border-gray-200">
-        
-        {/* Informasi Akun */}
-        <div className="space-y-4 text-sm">
-          <div className="border-b border-gray-100 pb-3">
-            <p className="text-xs text-gray-500 font-medium">Nama Lengkap</p>
-            <p className="text-gray-900 font-semibold mt-0.5">Yara Fitriyah</p>
-          </div>
+      {edit ? (
+        <div className="space-y-4">
+          <input
+            className="w-full border p-2 rounded"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nama"
+          />
 
-          <div className="border-b border-gray-100 pb-3">
-            <p className="text-xs text-gray-500 font-medium">Email</p>
-            <p className="text-gray-900 font-semibold mt-0.5">yarafitriyah@gmail.com</p>
-          </div>
+          <input
+            className="w-full border p-2 rounded"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+          />
 
-          <div className="border-b border-gray-100 pb-3">
-            <p className="text-xs text-gray-500 font-medium">Nomor Telepon</p>
-            <p className="text-gray-900 font-semibold mt-0.5">081234567890</p>
-          </div>
-
-          <div className="pb-2">
-            <p className="text-xs text-gray-500 font-medium">Status Akun</p>
-            <p className="text-emerald-700 font-semibold mt-0.5">Mahasiswa / Peminjam Aktif</p>
-          </div>
-        </div>
-
-        {/* Tombol Navigasi & Aksi */}
-        <div className="mt-6 space-y-2">
-          <Link
-            href="/daftar-alat"
-            className="block w-full text-center rounded bg-emerald-800 py-2 text-sm text-white font-medium hover:bg-emerald-900 transition"
-          >
-            Kembali ke Daftar Alat
-          </Link>
+          <input
+            className="w-full border p-2 rounded"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Nomor Telepon"
+          />
 
           <button
-            onClick={handleLogout}
-            className="block w-full text-center rounded bg-red-600 py-2 text-sm text-white font-medium hover:bg-red-700 transition"
+            onClick={updateUser}
+            className="bg-emerald-700 text-white px-4 py-2 rounded"
           >
-            Keluar (Logout)
+            Simpan
           </button>
         </div>
+      ) : (
+        <div className="space-y-3">
+          <p>Nama: {user.name}</p>
+          <p>Email: {user.email}</p>
+          <p>Nomor Telepon: {user.phone}</p>
+          <p>Role: {user.role}</p>
 
-      </div>
+          <button
+            onClick={() => setEdit(true)}
+            className="bg-emerald-700 text-white px-4 py-2 rounded"
+          >
+            Edit Profil
+          </button>
 
+          <button
+            onClick={deleteUser}
+            className="bg-red-600 text-white px-4 py-2 rounded ml-2"
+          >
+            Hapus Akun
+          </button>
+        </div>
+      )}
     </div>
   );
 }
