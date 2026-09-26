@@ -54,8 +54,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f5f3ee] px-4 sm:px-6 py-12 font-sans">
+    <div className="relative flex min-h-screen flex-col items-center justify-center bg-[#f5f3ee] px-4 sm:px-6 py-12 font-sans">
       <div className="mb-8 text-center">
+        <Link href="/" className="absolute top-6 left-6 sm:top-10 sm:left-10 flex items-center gap-2 text-sm font-bold text-emerald-800 hover:text-emerald-950 transition">
+        &larr; Kembali
+        </Link>
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-emerald-900">
           Get Ur Gear
         </h1>
