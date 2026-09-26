@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { apiFetch } from '@/lib/api';
 
 export default async function DetailAlatPage({ params }) {
-  const { id } = params;
+  const { id } = await params;
   let alat = null;
 
   try {
@@ -27,7 +27,7 @@ export default async function DetailAlatPage({ params }) {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 py-8">
       <h1 className="mb-4 text-2xl font-bold text-gray-800">Get Ur Gear</h1>
       
       <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-sm border border-gray-200">
