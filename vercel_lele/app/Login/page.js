@@ -40,7 +40,6 @@ export default function LoginPage() {
         throw new Error(data.message || 'Login gagal, periksa kembali email dan password Anda.');
       }
 
-      // Menyimpan Token ke localStorage
       if (data.token) {
         localStorage.setItem('token', data.token);
       }
