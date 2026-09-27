@@ -2,6 +2,9 @@ import { apiFetch } from '@/lib/api';
 import { requireAdmin } from '@/lib/auth';
 import { createAdminUserAction, updateAdminUserAction } from '@/app/actions/admin';
 import AdminDeleteUserButton from '@/components/AdminDeleteUserButton';
+import StatusActions from '@/components/StatusActions';
+import StatusBadge from '@/components/StatusBadge';
+import Link from 'next/link';
 
 function items(response) {
   if (Array.isArray(response)) return response;
@@ -23,7 +26,7 @@ export default async function AdminPage({ searchParams }) {
 
   const [usersResponse, rentalsResponse] = await Promise.all([
     apiFetch('/users'),
-    apiFetch('/rentals'),
+    apiFetch('/rentals', { cache: 'no-store' }),
   ]);
   const users = items(usersResponse);
   const rentals = items(rentalsResponse);
@@ -44,6 +47,58 @@ export default async function AdminPage({ searchParams }) {
         <div className="rounded-xl border bg-white p-5 shadow-sm"><p className="text-sm text-gray-500">Total Pengguna</p><p className="mt-2 text-3xl font-bold text-emerald-800">{users.length}</p></div>
         <div className="rounded-xl border bg-white p-5 shadow-sm"><p className="text-sm text-gray-500">Total Peminjaman</p><p className="mt-2 text-3xl font-bold text-emerald-800">{rentals.length}</p></div>
         <div className="rounded-xl border bg-white p-5 shadow-sm"><p className="text-sm text-gray-500">Menunggu Persetujuan</p><p className="mt-2 text-3xl font-bold text-amber-600">{pending}</p></div>
+      </section>
+
+      <section className="rounded-xl border bg-white p-5 shadow-sm sm:p-6">
+        <h2 className="mb-4 text-xl font-bold text-gray-900">Riwayat Peminjaman</h2>
+        {rentals.length === 0 ? (
+          <p className="py-6 text-center text-sm text-gray-500">Belum ada data peminjaman dari API.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[1350px] border-collapse text-left text-sm text-gray-800">
+              <thead>
+                <tr className="border-b-2 border-gray-300 bg-gray-100 text-xs font-bold uppercase text-gray-700">
+                  <th className="px-3 py-3">ID</th>
+                  <th className="px-3 py-3">Peminjam</th>
+                  <th className="px-3 py-3">Alat</th>
+                  <th className="px-3 py-3">Jumlah</th>
+                  <th className="px-3 py-3">Tanggal Mulai</th>
+                  <th className="px-3 py-3">Tanggal Selesai</th>
+                  <th className="px-3 py-3">Status</th>
+                  <th className="px-3 py-3">Approval Admin</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rentals.map((rental) => (
+                  <tr key={rental.id} className="border-b border-gray-200 hover:bg-emerald-50/50">
+                    <td className="whitespace-nowrap px-3 py-3 font-semibold">
+                      <Link href={`/detail-peminjaman/${rental.id}`} className="text-base font-bold text-emerald-800 underline-offset-2 hover:underline">#{rental.id}</Link>
+                    </td>
+                    <td className="px-3 py-3">
+                      {rental.user_name || rental.user?.name || `User #${rental.user_id ?? '—'}`}
+                    </td>
+                    <td className="px-3 py-3">
+                      {rental.equipment_name || rental.nama_alat || rental.alat?.nama || `Alat #${rental.equipment_id ?? rental.alat_id ?? '—'}`}
+                    </td>
+                    <td className="px-3 py-3">{rental.quantity ?? rental.jumlah ?? '—'}</td>
+                    <td className="whitespace-nowrap px-3 py-3">{rental.start_date || rental.tanggal_mulai || rental.tanggal_pinjam || '—'}</td>
+                    <td className="whitespace-nowrap px-3 py-3">{rental.end_date || rental.tanggal_selesai || rental.tanggal_kembali || '—'}</td>
+                    <td className="whitespace-nowrap px-3 py-3">
+                      <StatusBadge status={String(rental.status || 'PENDING').toUpperCase()} />
+                    </td>
+                    <td className="px-3 py-2">
+                      <StatusActions
+                        peminjamanId={rental.id}
+                        currentStatus={String(rental.status || 'PENDING').toUpperCase()}
+                        userRole="ADMIN"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
 
       <section className="rounded-xl border bg-white p-5 shadow-sm sm:p-6">

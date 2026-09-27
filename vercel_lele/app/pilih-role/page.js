@@ -9,12 +9,12 @@ export default function PilihRolePage() {
           <p className="mt-2 text-gray-600">Pilih peran Anda untuk melanjutkan.</p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Link href="/Login" className="rounded-xl border-2 border-emerald-100 p-6 transition hover:border-emerald-600 hover:bg-emerald-50">
+          <Link href="/login" className="rounded-xl border-2 border-emerald-100 p-6 transition hover:border-emerald-600 hover:bg-emerald-50">
             <span className="text-4xl" aria-hidden="true">👤</span>
             <h2 className="mt-4 text-xl font-bold text-gray-900">User</h2>
             <p className="mt-2 text-sm text-gray-600">Akses katalog dan kelola peminjaman Anda.</p>
           </Link>
-          <Link href="/Login/admin" className="rounded-xl border-2 border-amber-100 p-6 transition hover:border-amber-500 hover:bg-amber-50">
+          <Link href="/login/admin" className="rounded-xl border-2 border-amber-100 p-6 transition hover:border-amber-500 hover:bg-amber-50">
             <span className="text-4xl" aria-hidden="true">🛡️</span>
             <h2 className="mt-4 text-xl font-bold text-gray-900">Admin</h2>
             <p className="mt-2 text-sm text-gray-600">Kelola pengguna dan pantau operasional platform.</p>

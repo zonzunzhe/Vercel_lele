@@ -35,6 +35,8 @@ export async function updateRentalAction(id, payload) {
       body: JSON.stringify(payload),
     });
     revalidatePath(`/detail-peminjaman/${id}`);
+    revalidatePath('/admin');
+    revalidatePath('/peminjaman-saya');
     return { success: true, data: res };
   } catch (err) {
     return { success: false, message: err.message };
