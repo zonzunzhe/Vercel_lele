@@ -8,7 +8,7 @@ import { submitPeminjaman } from './action';
 function FormPengajuan() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const defaultAlatId = searchParams.get('alatId') || '';
+  const defaultEquipmentId = searchParams.get('equipmentId') || searchParams.get('alatId') || '';
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -19,20 +19,35 @@ function FormPengajuan() {
     setIsLoading(true);
     setErrorMsg(null);
 
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
+    try {
+      const token = localStorage.getItem('token') || localStorage.getItem('session_token');
+      if (!token) {
+        throw new Error('Anda harus login terlebih dahulu.');
+      }
+      const userId = localStorage.getItem('user_id');
+      if (!userId) {
+        throw new Error('Data pengguna tidak ditemukan. Silakan login ulang.');
+      }
 
-    const res = await submitPeminjaman(data);
+      // Kumpulkan data dari form.
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
 
-    if (!res.success) {
-      setErrorMsg(res.error);
-      setIsLoading(false);
-    } else {
+      const res = await submitPeminjaman(data, token, userId);
+
+      if (!res.success) {
+        throw new Error(res.error);
+      } 
+      
       setSuccessMsg(true);
-      setIsLoading(false);
       setTimeout(() => {
         router.push('/peminjaman-saya');
       }, 2000);
+      
+    } catch (err) {
+      setErrorMsg(err.message);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -46,7 +61,6 @@ function FormPengajuan() {
     );
   }
 
-  // [FIX 2] Struktur class responsif (p-5 sm:p-8 dll) dikembalikan
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
       <form onSubmit={handleSubmit} className="p-5 sm:p-8 flex flex-col gap-5 sm:gap-6">
@@ -58,16 +72,16 @@ function FormPengajuan() {
         )}
 
         <div>
-          <label className="block text-xs sm:text-sm font-semibold text-gray-800 mb-1 sm:mb-2">ID Alat</label>
+          <label className="block text-xs sm:text-sm font-semibold text-gray-800 mb-1 sm:mb-2">ID Peralatan</label>
           <input 
             type="text" 
-            name="alatId" 
-            defaultValue={defaultAlatId} 
-            readOnly={!!defaultAlatId}
+            name="equipmentId" 
+            defaultValue={defaultEquipmentId} 
+            readOnly={!!defaultEquipmentId}
             required
             className="w-full border border-gray-200 bg-gray-50 p-2.5 sm:p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-sm sm:text-base text-gray-800" 
           />
-          {defaultAlatId && <span className="text-[10px] sm:text-xs text-emerald-600 mt-1.5 sm:mt-2 block font-medium">ID terisi otomatis dari katalog.</span>}
+          {defaultEquipmentId && <span className="text-[10px] sm:text-xs text-emerald-600 mt-1.5 sm:mt-2 block font-medium">ID peralatan terisi otomatis dari katalog.</span>}
         </div>
 
         <div>

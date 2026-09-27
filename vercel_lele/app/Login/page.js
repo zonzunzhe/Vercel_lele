@@ -34,8 +34,23 @@ export default function LoginPage() {
         }),
       });
 
-      if (data.token) {
-        localStorage.setItem('token', data.token);
+      const token = data.token
+        || data.access_token
+        || data.data?.token
+        || data.data?.access_token;
+
+      if (!token) {
+        throw new Error('Login berhasil, tetapi token sesi tidak diterima dari server.');
+      }
+
+      const userId = data.user_id
+        || data.user?.id
+        || data.data?.user_id
+        || data.data?.user?.id;
+
+      localStorage.setItem('token', token);
+      if (userId) {
+        localStorage.setItem('user_id', String(userId));
       }
 
       setSuccessMessage('Login berhasil! Anda akan diarahkan ke daftar alat.');

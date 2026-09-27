@@ -72,7 +72,7 @@ export default async function DetailAlatPage({ params }) {
 
         <div className="space-y-2">
           <Link
-            href={`/ajukan-peminjaman?alatId=${id}`}
+            href={`/ajukan-peminjaman?equipmentId=${id}`}
             className="block w-full text-center rounded bg-emerald-800 py-2 text-sm text-white font-medium hover:bg-emerald-900 transition"
           >
             Ajukan Peminjaman

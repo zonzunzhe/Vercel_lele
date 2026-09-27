@@ -24,7 +24,7 @@ export function KartuAlat({ id, nama, kategori, stok, gambar }) {
           <Link href={`/detail-alat/${id}`} className="block w-full text-center bg-gray-100 text-gray-700 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-gray-200 transition">
             Detail
           </Link>
-          <Link href={`/ajukan-peminjaman?alatId=${id}`} className="block w-full text-center bg-emerald-700 text-white py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-emerald-800 transition">
+          <Link href={`/ajukan-peminjaman?equipmentId=${id}`} className="block w-full text-center bg-emerald-700 text-white py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-emerald-800 transition">
             Pinjam
           </Link>
         </div>
