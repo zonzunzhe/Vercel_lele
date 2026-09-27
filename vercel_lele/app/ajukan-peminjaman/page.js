@@ -20,20 +20,11 @@ function FormPengajuan() {
     setErrorMsg(null);
 
     try {
-      const token = localStorage.getItem('token') || localStorage.getItem('session_token');
-      if (!token) {
-        throw new Error('Anda harus login terlebih dahulu.');
-      }
-      const userId = localStorage.getItem('user_id');
-      if (!userId) {
-        throw new Error('Data pengguna tidak ditemukan. Silakan login ulang.');
-      }
-
       // Kumpulkan data dari form.
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
 
-      const res = await submitPeminjaman(data, token, userId);
+      const res = await submitPeminjaman(data);
 
       if (!res.success) {
         throw new Error(res.error);

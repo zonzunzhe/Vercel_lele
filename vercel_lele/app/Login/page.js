@@ -1,17 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { userApiFetch } from '@/lib/userApi';
+import { loginAction } from '@/app/actions/auth';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [generalError, setGeneralError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [accountMessage] = useState(() => (
+    typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('deleted') === '1'
+      ? 'Akun berhasil dihapus.'
+      : ''
+  ));
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    if (query.get('deleted') === '1') {
+      window.history.replaceState({}, '', '/login');
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -26,35 +36,16 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const data = await userApiFetch('/login', {
-        method: 'POST',
-        body: JSON.stringify({
-          email: email.trim(),
-          password,
-        }),
-      });
+      const formData = new FormData();
+      formData.set('email', email);
+      formData.set('password', password);
+      const result = await loginAction(formData);
 
-      const token = data.token
-        || data.access_token
-        || data.data?.token
-        || data.data?.access_token;
-
-      if (!token) {
-        throw new Error('Login berhasil, tetapi token sesi tidak diterima dari server.');
-      }
-
-      const userId = data.user_id
-        || data.user?.id
-        || data.data?.user_id
-        || data.data?.user?.id;
-
-      localStorage.setItem('token', token);
-      if (userId) {
-        localStorage.setItem('user_id', String(userId));
+      if (result?.error) {
+        throw new Error(result.error);
       }
 
       setSuccessMessage('Login berhasil! Anda akan diarahkan ke daftar alat.');
-      window.setTimeout(() => router.push('/daftar-alat'), 1200);
     } catch (err) {
       setGeneralError(err.message || 'Terjadi kesalahan koneksi ke server.');
     } finally {
@@ -91,6 +82,11 @@ export default function LoginPage() {
           {successMessage && (
             <div role="status" aria-live="polite" className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-center text-sm font-medium text-emerald-800">
               {successMessage}
+            </div>
+          )}
+          {accountMessage && (
+            <div role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-center text-sm font-medium text-emerald-800">
+              {accountMessage}
             </div>
           )}
 

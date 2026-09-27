@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { cookies } from 'next/headers';
 import { apiFetch } from '@/lib/api';
 
 export function BarisStatus({ id, namaAlat, tanggal, status, warnaStatus }) {
@@ -29,8 +30,31 @@ function getWarnaStatus(status) {
 }
 
 export default async function HalamanPeminjamanSaya() {
-  const res = await apiFetch('/rentals');
-  const riwayat = Array.isArray(res) ? res : res.data || [];
+  const cookieStore = await cookies();
+  const userId = cookieStore.get('user_id')?.value;
+  if (!userId) {
+    return (
+      <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center p-8 text-center">
+        <h1 className="mb-3 text-2xl font-bold text-gray-900">Sesi perlu diperbarui</h1>
+        <p className="mb-6 text-gray-600">Silakan login kembali untuk melihat riwayat peminjaman Anda.</p>
+        <Link href="/login" className="rounded bg-emerald-700 px-5 py-2.5 font-semibold text-white hover:bg-emerald-800">Login</Link>
+      </div>
+    );
+  }
+  let res;
+  try {
+    res = await apiFetch('/rentals');
+  } catch {
+    return (
+      <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center p-8 text-center">
+        <h1 className="mb-3 text-2xl font-bold text-gray-900">Login diperlukan</h1>
+        <p className="mb-6 text-gray-600">Login untuk melihat riwayat peminjaman Anda.</p>
+        <Link href="/login" className="rounded bg-emerald-700 px-5 py-2.5 font-semibold text-white hover:bg-emerald-800">Login</Link>
+      </div>
+    );
+  }
+  const allRentals = Array.isArray(res) ? res : res.data || [];
+  const riwayat = allRentals.filter((item) => String(item.user_id) === String(userId));
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 sm:p-8">

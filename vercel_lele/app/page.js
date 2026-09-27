@@ -1,65 +1,8 @@
-"use client";
-
-import { useState } from 'react';
 import Link from 'next/link';
 
 export default function HalamanUtama() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   return (
     <div className="min-h-screen bg-[#f5f3ee] text-gray-800 flex flex-col">
-      <nav className="relative flex items-center justify-between px-6 py-5 md:px-12 bg-[#f5f3ee] z-50">
-        <div>
-          <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-emerald-900">
-            Get Ur Gear
-          </h1>
-          <p className="text-[10px] md:text-xs tracking-[0.2em] text-gray-500 mt-1">
-            RENT • EXPLORE • REPEAT
-          </p>
-        </div>
-
-        <button 
-          className="md:hidden p-2 text-emerald-900"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {isMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <Link href="/" className="text-emerald-800 border-b-2 border-emerald-800 pb-1">
-            Home
-          </Link>
-          <Link href="/daftar-alat" className="text-gray-600 hover:text-emerald-800 transition">
-            Daftar Alat
-          </Link>
-          <Link href="/peminjaman-saya" className="text-gray-600 hover:text-emerald-800 transition">
-            Peminjaman Saya
-          </Link>
-          <Link href="/ajukan-peminjaman" className="text-gray-600 hover:text-emerald-800 transition">
-            Ajukan Pinjaman
-          </Link>
-          <Link href="/login" className="text-gray-600 hover:text-emerald-800 transition">
-            Login
-          </Link>
-        </div>
-
-        {isMenuOpen && (
-          <div className="absolute top-full left-0 w-full bg-[#f5f3ee] border-t border-gray-200 p-6 flex flex-col gap-4 shadow-lg md:hidden">
-            <Link href="/" className="text-emerald-800 font-bold">Home</Link>
-            <Link href="/daftar-alat" className="text-gray-600">Daftar Alat</Link>
-            <Link href="/peminjaman-saya" className="text-gray-600">Peminjaman Saya</Link>
-            <Link href="/ajukan-peminjaman" className="text-gray-600">Ajukan Pinjaman</Link>
-            <Link href="/login" className="text-emerald-700 font-bold mt-2 pt-4 border-t border-gray-200">Login / Register</Link>
-          </div>
-        )}
-      </nav>
-
       <section className="px-4 md:px-12 py-6 md:py-8">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-2xl md:rounded-3xl bg-[#e9e6dc]">
           <div className="grid md:grid-cols-2 min-h-[400px] md:min-h-[500px]">
@@ -105,7 +48,7 @@ export default function HalamanUtama() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <Link href="/daftar-alat" className="group rounded-2xl bg-white p-5 md:p-6 shadow-sm border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition">
               <div className="mb-4 md:mb-5 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-[#dfe6d0] text-xl md:text-2xl">
                 ⛺
@@ -151,20 +94,6 @@ export default function HalamanUtama() {
               </div>
             </Link>
 
-            <Link href="/login" className="group rounded-2xl bg-white p-5 md:p-6 shadow-sm border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition">
-              <div className="mb-4 md:mb-5 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-[#eee3d2] text-xl md:text-2xl">
-                👤
-              </div>
-              <h3 className="text-lg md:text-xl font-bold text-emerald-900">
-                Login
-              </h3>
-              <p className="mt-1.5 md:mt-2 text-xs md:text-sm leading-5 md:leading-6 text-gray-500">
-                Masuk atau daftar akun baru
-              </p>
-              <div className="mt-4 md:mt-6 flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-full bg-[#eee3d2] text-base md:text-lg text-gray-800 group-hover:translate-x-1 transition">
-                →
-              </div>
-            </Link>
           </div>
         </div>
       </section>

@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
     return [
       // { source: "/Login", destination: "/login", permanent: true },
       // { source: "/Register", destination: "/register", permanent: true },
-      { source: "/Profile", destination: "/profile", permanent: true },
       { source: "/Detail-Alat", destination: "/detail-alat", permanent: true },
       { source: "/Detail Alat", destination: "/detail-alat", permanent: true },
       { source: "/Ajukan Peminjaman", destination: "/ajukan-peminjaman", permanent: true },

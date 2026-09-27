@@ -32,9 +32,10 @@ export async function apiFetch(endpoint: string, options: RequestInit = {}) {
     headers['X-HTTP-Method-Override'] = reqMethod;
     reqMethod = 'POST';
   }
-  
+
   const res = await fetch(url, {
     ...options,
+    method: reqMethod,
     headers: { ...headers, ...options.headers },
   });
 

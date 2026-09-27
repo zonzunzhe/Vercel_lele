@@ -1,10 +1,16 @@
 'use server';
 
-export async function submitPeminjaman(data, token, userId) {
+import { cookies } from 'next/headers';
+import { apiFetch } from '@/lib/api';
+
+export async function submitPeminjaman(data) {
   try {
-    if (!token) {
-      throw new Error('Sesi tidak valid. Token tidak dikirim ke server.');
+    const cookieStore = await cookies();
+    if (!cookieStore.get('session_token')?.value) {
+      throw new Error('Anda harus login terlebih dahulu.');
     }
+
+    const userId = cookieStore.get('user_id')?.value;
     if (!userId) {
       throw new Error('Data pengguna tidak ditemukan. Silakan login ulang.');
     }
@@ -16,14 +22,8 @@ export async function submitPeminjaman(data, token, userId) {
     endDate.setDate(endDate.getDate() + Number(data.durasi));
     const formattedEndDate = endDate.toISOString().slice(0, 10);
 
-    const response = await fetch('https://hmif.if.unram.ac.id/api/v3/geturgear/rentals', {
+    await apiFetch('/rentals', {
       method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'x-api-key': 'pk_geturgear_83354acb379cf0fa',
-        Authorization: `Bearer ${token}`,
-      },
       body: JSON.stringify({
         user_id: Number(userId),
         equipment_id: Number(data.equipmentId),
@@ -33,11 +33,6 @@ export async function submitPeminjaman(data, token, userId) {
         ...(data.catatan ? { purpose: data.catatan } : {}),
       }),
     });
-
-    const resultData = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      throw new Error(resultData.message || resultData.error || 'API menolak pengajuan peminjaman.');
-    }
 
     return { success: true };
   } catch (error) {
