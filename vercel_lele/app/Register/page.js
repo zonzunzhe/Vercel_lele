@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { userApiFetch } from '@/lib/userApi';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -42,25 +43,15 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://hmif.if.unram.ac.id/api/v3/geturgear/register', {
+      await userApiFetch('/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
         body: JSON.stringify({
-          name: nama,
-          email: email,
-          password: password,
-          phone: phone,
+          name: nama.trim(),
+          email: email.trim(),
+          password,
+          phone: phone.trim(),
         }),
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Registrasi gagal, silakan periksa kembali data Anda.');
-      }
 
       alert('Registrasi berhasil! Silakan masuk dengan akun Anda.');
       router.push('/login');

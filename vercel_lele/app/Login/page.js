@@ -3,12 +3,14 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { userApiFetch } from '@/lib/userApi';
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [generalError, setGeneralError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
@@ -20,32 +22,24 @@ export default function LoginPage() {
     }
 
     setGeneralError('');
+    setSuccessMessage('');
     setLoading(true);
 
     try {
-      const response = await fetch('https://hmif.if.unram.ac.id/api/v3/geturgear/login', {
+      const data = await userApiFetch('/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify({
-          email: email,
-          password: password,
+          email: email.trim(),
+          password,
         }),
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Login gagal, periksa kembali email dan password Anda.');
-      }
 
       if (data.token) {
         localStorage.setItem('token', data.token);
       }
 
-      alert('Login berhasil!');
-      router.push('/daftar-alat');
+      setSuccessMessage('Login berhasil! Anda akan diarahkan ke daftar alat.');
+      window.setTimeout(() => router.push('/daftar-alat'), 1200);
     } catch (err) {
       setGeneralError(err.message || 'Terjadi kesalahan koneksi ke server.');
     } finally {
@@ -75,8 +69,13 @@ export default function LoginPage() {
         
         <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
           {generalError && (
-            <div className="rounded-xl bg-red-50 p-3 text-center text-sm text-red-600 font-medium border border-red-200">
+            <div role="alert" className="rounded-xl bg-red-50 p-3 text-center text-sm text-red-600 font-medium border border-red-200">
               {generalError}
+            </div>
+          )}
+          {successMessage && (
+            <div role="status" aria-live="polite" className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-center text-sm font-medium text-emerald-800">
+              {successMessage}
             </div>
           )}
 
@@ -106,7 +105,7 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || Boolean(successMessage)}
             className="mt-6 block w-full text-center rounded-full bg-emerald-800 py-3 text-sm text-white font-bold tracking-wide hover:bg-emerald-900 hover:shadow-md hover:-translate-y-0.5 transition duration-200 disabled:opacity-50"
           >
             {loading ? 'Memproses...' : 'Masuk'}
