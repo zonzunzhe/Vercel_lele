@@ -61,16 +61,6 @@ export default function StatusActions({ peminjamanId, currentStatus, userRole })
         </button>
       )}
 
-      {userRole === 'ADMIN' && currentStatus?.toUpperCase() === BORROW_STATUS.APPROVED && (
-        <button
-          disabled={isPending}
-          onClick={() => handleUpdateStatus(BORROW_STATUS.BORROWED)}
-          className="px-3 py-1.5 bg-purple-600 text-white rounded text-sm hover:bg-purple-700 disabled:opacity-50 font-medium"
-        >
-          Tandai Alat Diambil
-        </button>
-      )}
-
       {userRole === 'ADMIN' && currentStatus?.toUpperCase() === BORROW_STATUS.BORROWED && (
         <button
           disabled={isPending}

@@ -20,6 +20,7 @@ function getUserIdFromToken(token: string) {
 export async function loginAction(formData: FormData) {
   const email = String(formData.get('email') || '').trim();
   const password = String(formData.get('password') || '');
+  const requestedRole = String(formData.get('role') || 'user').toLowerCase();
 
   if (!email || !password) {
     return { error: 'Email dan password wajib diisi.' };
@@ -42,6 +43,7 @@ export async function loginAction(formData: FormData) {
     || data.data?.token
     || data.data?.access_token;
   const user = data.user || data.data?.user || null;
+  const returnedRole = String(user?.role || data.role || data.data?.role || '').toLowerCase();
   const userId = data.user_id
     || data.user?.id
     || data.data?.user_id
@@ -56,6 +58,10 @@ export async function loginAction(formData: FormData) {
     return { error: 'Login gagal: identitas pengguna tidak dapat diverifikasi.' };
   }
 
+  if (requestedRole === 'admin' && returnedRole !== 'admin') {
+    return { error: 'Akun ini tidak memiliki akses admin.' };
+  }
+
   const cookieStore = await cookies();
   cookieStore.set('session_token', token, {
     httpOnly: true,
@@ -64,7 +70,14 @@ export async function loginAction(formData: FormData) {
     maxAge: 60 * 60 * 24 * 7,
     path: '/',
   });
-  cookieStore.set('user_profile', JSON.stringify(user || {}), {
+  cookieStore.set('user_profile', JSON.stringify({ ...(user || {}), role: returnedRole || requestedRole }), {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 60 * 60 * 24 * 7,
+    path: '/',
+  });
+  cookieStore.set('user_role', returnedRole || requestedRole, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
@@ -89,5 +102,6 @@ export async function logoutAction() {
   cookieStore.delete('session_token');
   cookieStore.delete('user_profile');
   cookieStore.delete('user_id');
+  cookieStore.delete('user_role');
   redirect('/login');
 }

@@ -2,14 +2,26 @@ import { apiFetch } from '@/lib/api';
 import StatusBadge from '@/components/StatusBadge';
 import StatusActions from '@/components/StatusActions';
 import Link from 'next/link';
+import { getSession } from '@/lib/auth';
 
 export default async function DetailPeminjamanPage({ params }) {
   const { id } = await params;
   
   const data = await apiFetch(`/rentals/${id}`);
   const peminjaman = data.data || data; 
-  
-  const userRole = 'ADMIN'; 
+  const session = await getSession();
+  const userRole = session.role.toUpperCase();
+  const isOwner = String(peminjaman.user_id) === String(session.userId);
+
+  if (!isOwner && userRole !== 'ADMIN') {
+    return (
+      <div className="mx-auto max-w-xl p-8 text-center">
+        <h1 className="text-2xl font-bold text-gray-900">Akses Ditolak</h1>
+        <p className="mt-2 text-gray-600">Anda tidak memiliki akses ke peminjaman ini.</p>
+        <Link href="/peminjaman-saya" className="mt-5 inline-block text-emerald-700 hover:underline">Kembali ke riwayat</Link>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 sm:p-8">

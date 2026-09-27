@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import LogoutButton from '@/components/LogoutButton';
 
-export default function NavigationMenu({ isLoggedIn, userName }) {
+export default function NavigationMenu({ isLoggedIn, isAdmin, userName }) {
   const [isOpen, setIsOpen] = useState(false);
 
   function closeMenu() {
@@ -35,10 +35,15 @@ export default function NavigationMenu({ isLoggedIn, userName }) {
             <Link href="/profile" onClick={closeMenu} className="rounded px-3 py-2 text-sm font-medium text-gray-700 hover:bg-emerald-50 hover:text-emerald-700">
               <span aria-hidden="true">👤</span> {userName || 'Profile'}
             </Link>
+            {isAdmin && (
+              <Link href="/admin" onClick={closeMenu} className="rounded px-3 py-2 text-sm font-semibold text-amber-700 hover:bg-amber-50">
+                🛡️ Admin
+              </Link>
+            )}
             <LogoutButton />
           </>
         ) : (
-          <Link href="/login" onClick={closeMenu} className="rounded bg-emerald-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-emerald-800">
+          <Link href="/pilih-role" onClick={closeMenu} className="rounded bg-emerald-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-emerald-800">
             Login
           </Link>
         )}

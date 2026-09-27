@@ -5,6 +5,7 @@ import NavigationMenu from '@/components/NavigationMenu';
 export default async function Navigation() {
   const cookieStore = await cookies();
   const isLoggedIn = Boolean(cookieStore.get('session_token')?.value);
+  const isAdmin = cookieStore.get('user_role')?.value === 'admin';
   let userName = '';
   try {
     const profile = JSON.parse(cookieStore.get('user_profile')?.value || '{}');
@@ -19,7 +20,7 @@ export default async function Navigation() {
         <Link href="/" className="font-bold text-emerald-800">
           Get Ur Gear
         </Link>
-        <NavigationMenu isLoggedIn={isLoggedIn} userName={userName} />
+        <NavigationMenu isLoggedIn={isLoggedIn} isAdmin={isAdmin} userName={userName} />
       </div>
     </nav>
   );
