@@ -44,7 +44,7 @@ export default function HalamanUtama() {
           <Link href="/ajukan-peminjaman" className="text-gray-600 hover:text-emerald-800 transition">
             Ajukan Pinjaman
           </Link>
-          <Link href="/login" className="text-gray-600 hover:text-emerald-800 transition">
+          <Link href="/Login" className="text-gray-600 hover:text-emerald-800 transition">
             Login
           </Link>
         </div>
@@ -55,7 +55,7 @@ export default function HalamanUtama() {
             <Link href="/daftar-alat" className="text-gray-600">Daftar Alat</Link>
             <Link href="/peminjaman-saya" className="text-gray-600">Peminjaman Saya</Link>
             <Link href="/ajukan-peminjaman" className="text-gray-600">Ajukan Pinjaman</Link>
-            <Link href="/login" className="text-emerald-700 font-bold mt-2 pt-4 border-t border-gray-200">Login / Register</Link>
+            <Link href="/Login" className="text-emerald-700 font-bold mt-2 pt-4 border-t border-gray-200">Login</Link>
           </div>
         )}
       </nav>
@@ -91,6 +91,7 @@ export default function HalamanUtama() {
           </div>
         </div>
       </section>
+
       <section className="px-4 md:px-12 py-10 md:py-16 flex-grow">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 md:mb-10 text-center px-4">
@@ -151,7 +152,7 @@ export default function HalamanUtama() {
               </div>
             </Link>
 
-            <Link href="/login" className="group rounded-2xl bg-white p-5 md:p-6 shadow-sm border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition">
+            <Link href="/Login" className="group rounded-2xl bg-white p-5 md:p-6 shadow-sm border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition">
               <div className="mb-4 md:mb-5 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-[#eee3d2] text-xl md:text-2xl">
                 👤
               </div>

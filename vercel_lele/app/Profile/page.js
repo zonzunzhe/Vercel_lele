@@ -14,7 +14,27 @@ export default function ProfilePage() {
   useEffect(() => {
     async function getUser() {
       try {
-        const data = await userApiFetch('/users/15');
+        // Ambil email yang disimpan saat login
+        const userEmail = localStorage.getItem('user_email');
+
+        if (!userEmail) {
+          throw new Error('Belum login.');
+        }
+
+        // Ambil semua user
+        const users = await userApiFetch('/users');
+
+        // Cari user berdasarkan email yang sedang login
+        const currentUser = users.find(
+          (item) => item.email === userEmail
+        );
+
+        if (!currentUser) {
+          throw new Error('Data user tidak ditemukan.');
+        }
+
+        // Ambil detail user berdasarkan ID
+        const data = await userApiFetch(`/users/${currentUser.id}`);
 
         setUser(data);
         setName(data.name);
@@ -30,7 +50,7 @@ export default function ProfilePage() {
 
   async function updateUser() {
     try {
-      const data = await userApiFetch('/users/15', {
+      const data = await userApiFetch(`/users/${user.id}`, {
         method: 'POST',
         headers: {
           'X-HTTP-Method-Override': 'PUT',
@@ -44,6 +64,10 @@ export default function ProfilePage() {
 
       setUser(data);
       setEdit(false);
+
+      // Update email di localStorage kalau email diubah
+      localStorage.setItem('user_email', email);
+
       alert('Profil berhasil diperbarui!');
     } catch (error) {
       alert(error.message);
@@ -52,12 +76,16 @@ export default function ProfilePage() {
 
   async function deleteUser() {
     try {
-      await userApiFetch('/users/15', {
+      await userApiFetch(`/users/${user.id}`, {
         method: 'POST',
         headers: {
           'X-HTTP-Method-Override': 'DELETE',
         },
       });
+
+      localStorage.removeItem('token');
+      localStorage.removeItem('user_name');
+      localStorage.removeItem('user_email');
 
       alert('Akun berhasil dihapus!');
     } catch (error) {
