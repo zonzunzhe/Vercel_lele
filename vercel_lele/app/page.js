@@ -34,6 +34,7 @@ export default function HalamanUtama() {
           </div>
         </div>
       </section>
+
       <section className="px-4 md:px-12 py-10 md:py-16 flex-grow">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 md:mb-10 text-center px-4">
